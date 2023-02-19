@@ -1,6 +1,8 @@
+/*Generating the database*/
 create database db_1;
 use db_1;
 
+/*Creating the tables according to the cenary and the models*/
 CREATE TABLE `tbl_departamento` (
   `sigla` varchar(30) NOT NULL,
   `nome` varchar(80) NOT NULL,
@@ -157,6 +159,7 @@ CREATE TABLE `tbl_subgerente` (
 
 
 
+/*Inserting information inside the newly created tables*/
 INSERT INTO tbl_departamento(sigla, nome)
 VALUES ('TI', 'Informática');
 INSERT INTO tbl_departamento(sigla, nome)
@@ -320,8 +323,10 @@ INSERT INTO tbl_fornece(CNPJ_fornec, codigo_prod)
 VALUES (999999456, 007);
 
 
+/*Starting to elaborate all querys required to obtain the wanted information*/
 
 /* 1 - Quais departamentos possuem mais de um setor? */
+/* 1 - Which departments have more than one sector?*/
 
 SELECT tbl_departamento.nome, count(tbl_departamento.nome) as qntd
 FROM tbl_departamento
@@ -331,6 +336,7 @@ HAVING qntd > 1;
 
 
 /* 2 - Quais departamentos possuem maior número de empregados? */
+/* 2 - Which departments have the largest number of employees? */
 
 SELECT tbl_departamento.nome, count(tbl_empregado.CPF) as qtnd
 FROM tbl_departamento
@@ -340,11 +346,12 @@ ORDER BY qtnd DESC
 LIMIT 2;
 
 /* 3 - Quantos pedidos foram feitos para a empresa?  */
-
+/* 3 - How many orders have been placed for the company?  */
 SELECT count(tbl_pedido.numero) 
 FROM tbl_pedido;  
 
 /* 4 - Quais setores estão relacionados ao processo de manipulação dos remédios? */
+/* 4 - Which departments are related to the drug handling process? */
 
 SELECT tbl_setor.nome, tbl_setor.atribuicao
 FROM tbl_departamento
@@ -355,6 +362,7 @@ ORDER BY tbl_setor.atribuicao
 LIMIT 2;  
 
 /* 5 - Qual departamento possui o maior número de subgerentes? */
+/* 5 - Which department has the largest number of sub-managers? */
 
 SELECT tbl_departamento.nome, count(tbl_subgerente.ID) as qtnd
 FROM tbl_departamento
@@ -364,12 +372,14 @@ ORDER BY qtnd DESC
 LIMIT 1; 
 
 /* 6 - Quanto gerentes possuem mais de 10 anos de serviço na função? */
+/* 6 - How many managers have more than 10 years of service in the function? */
 
 SELECT count(tbl_gerente.data_cargo) as qntd
 FROM tbl_gerente
 WHERE YEAR(CURRENT_DATE()) - YEAR(data_cargo) > 10;  
 
 /* 7 - Quais pedidos incluem 20 ou mais unidades de um produto? */
+/* 7 - Which orders include 20 or more units of a product? */
 
 SELECT numero_ped, quantidade
 FROM tbl_constar
@@ -377,22 +387,26 @@ WHERE quantidade >= 20;
 
 
 /* 8 - Quantos empregados ganham mais que 5 mil reais? */
+/* 8 - How many employees earn more than 5 thousand reais? */
 
 SELECT count(tbl_empregado.salario)
 FROM tbl_empregado
 WHERE salario > 5000;  
 
 /* 9 - Quantos departamentos estão sendo investigados? */
+/* 9 - How many departments are being investigated? */
 
 SELECT count(sigla_dep)
 FROM tbl_fiscaliza;  
 
 /* 10 - Quantos órgãos fiscalizadores estão fiscalizando a empresa? */
+/* 10 - How many inspection agencies are inspecting the company? */
 
 SELECT count(sigla_org)
 FROM tbl_fiscaliza;
 
 /* 11 - Qual farmácia realiza o maior número de pedidos? */
+/* 11 - Which pharmacy makes the largest number of orders? */
 
 SELECT tbl_farmacia.nome, count(tbl_pedido.numero) as qntd
 FROM tbl_farmacia
@@ -402,11 +416,13 @@ ORDER BY qntd DESC
 LIMIT 1; 
 
 /* 12 - Quantos fornecedores fornecem matéria-prima para a fabricação dos remédios? */
+/* 12 - How many suppliers provide raw material for the manufacturing of the drugs? */
 
 SELECT count(tbl_fornece.cnpj_fornec)
 FROM tbl_fornece;
 
 /* 13 - Quais setores tem o maior número de empregados? */
+/* 13 - Which sectors have the largest number of employees? */
 
 SELECT tbl_setor.nome, count(tbl_empregado.CPF) as qtnd
 FROM tbl_setor
@@ -416,17 +432,20 @@ ORDER BY qtnd DESC
 LIMIT 2; 
 
 /* 14 - Quais funções um empregado pode ter? */
+/* 14 - What functions can an employee have? */
 
 SELECT descricao, codigo
 FROM tbl_funcao;
 
 /* 15 - Quantos subgerentes estão a menos de 7 anos na função? */
+/* 15 - How many assistant managers have been in the position less than 7 years? */
 
 SELECT count(tbl_subgerente.data_cargo) as qntd
 FROM tbl_subgerente
 WHERE YEAR(CURRENT_DATE()) - YEAR(data_cargo) < 9; 
 
 /* 16 - Qual transportadora transporta o maior número de pedidos? */
+/* 16 - Which carrier carries the most orders? */
 
 SELECT tbl_transportadora.nome, count(tbl_pedido.numero) as qntd
 FROM tbl_transportadora
@@ -436,6 +455,7 @@ ORDER BY qntd DESC
 LIMIT 1; 
 
 /* 17 - Quais setores estão encarregados de realizar o marketing dos medicamentos? */ 
+/* 17 - Which sectors are in charge of marketing the drugs? */
 
 SELECT tbl_setor.nome, tbl_setor.atribuicao
 FROM tbl_departamento
@@ -446,22 +466,26 @@ ORDER BY tbl_setor.atribuicao DESC
 LIMIT 1; 
 
 /* 18 - Qual a média de unidades de produto nos pedidos feitos a empresa? */
+/* 18 - What is the average number of product units in the orders placed at the company? */
 
 SELECT avg(quantidade)
 FROM tbl_constar;
 
 /* 19 - Quantos empregados estão listados como subgerentes na empresa? */
+/* 19 - How many employees are listed as sub-managers in the company? */
 
 SELECT count(tbl_subgerente.ID) as qntd 
 FROM tbl_subgerente; 
 
 /* 20 - Soma de todas as unidades de produto presentes nos pedidos feitos a empresa? */
+/* 20 - Sum of all the product units present in the orders placed with the company? */
 
 SELECT sum(quantidade)
 FROM tbl_constar;
 
 
 /* 21 - Quais empregados possuem funcao X e também são gerentes? */
+/* 21 - Which employees have role X and are also managers? */
 
 /* Produto Cartesiano */
 SELECT DISTINCT tbl_empregado.nome FROM tbl_empregado, tbl_gerente, tbl_funcao
@@ -476,11 +500,43 @@ INNER JOIN tbl_funcao ON tbl_empregado.funcao = tbl_funcao.codigo AND tbl_funcao
 
 
 /* 22 - Apresente a relação de todos os produtos que não foram pedidos com quantidade maior que 20? */
+/* 22 - List all the products that were not ordered with quantity greater than 20? */
 
 SELECT codigo_prod 
 FROM tbl_constar
 WHERE codigo_prod not in (SELECT codigo_prod FROM tbl_constar WHERE quantidade > 20)
 GROUP BY codigo_prod;
+
+
+
+/*Transaction operations - EXAMPLES*/
+
+
+/* 1st EXAMPLE: A first possibility to use transaction management in the database is to start a transaction in order to be able to insert
+values into specific tables. In the example below, the transaction is started in order to
+to insert values determined by the dev in the supplier and product tables. */
+
+START TRANSACTION;
+INSERT INTO tbl_fornecedor(CNPJ, nome, localizacao) VALUES (56756756, 'No ltda', 'Rua dos Barões,119'); 
+INSERT INTO tbl_produto(codigo, nome, sigla_dep) VALUES (9, 'antialérgico', 'MR');
+COMMIT; 
+
+/* 2nd EXAMPLE: A second possibility to use transaction operations is to change existing values
+within the tables created by other values determined by the dev. In the example below, the designated operation is changing
+the name of the product just entered into the database by another. */
+
+START TRANSACTION;
+SELECT nome
+FROM tbl_produto
+WHERE codigo = 9;
+
+UPDATE tbl_produto
+SET nome = 'Devolve sono'
+WHERE codigo = 9;
+
+COMMIT; 
+
+
 
 
 
