@@ -31,21 +31,21 @@ For employees who are not managers or deputy managers, the company requires that
 
 ## Logic Data Model:
 
-TBDepartamento (sigla, nome)
+    TBDepartamento (sigla, nome)
 
-TBOrgaos_fiscalizadores(sigla, ID, nome)
+    TBOrgaos_fiscalizadores(sigla, ID, nome)
 
-TBFiscaliza(sigla_Dep, sigla_Org)
+    TBFiscaliza(sigla_Dep, sigla_Org)
 
 	sigla_Dep REF TBDepartamento
  
 	sigla_Org REF TBOrgaos_fiscalizadores
  
-TBSetor (atribuicao, numero, nome, sigla_Dep)
+    TBSetor (atribuicao, numero, nome, sigla_Dep)
 
 	sigla_Dep REF TBDepartamento
  
-TBEmpregado (CPF, RG, celular, e-mail, nome completo, salario, funcao, sigla_Dep, atribuicao_Set)
+    TBEmpregado (CPF, RG, celular, e-mail, nome completo, salario, funcao, sigla_Dep, atribuicao_Set)
 
 	sigla_Dep REF TBDepartamento
  
@@ -53,37 +53,37 @@ TBEmpregado (CPF, RG, celular, e-mail, nome completo, salario, funcao, sigla_Dep
  
 	funcao REF TBfuncao
  
-TBFuncao(descricao, codigo)
+    TBFuncao(descricao, codigo)
 
-TBFornecedor (CNPJ, localizacao, nome)
+    TBFornecedor (CNPJ, localizacao, nome)
 
-TBProduto (Codigo, Nome, sigla_Dep)
+    TBProduto (Codigo, Nome, sigla_Dep)
 
 	sigla_Dep REF TBDepartamento
  
-TBFornece (cnpj_Fornec, codigo_Prod)
+    TBFornece (cnpj_Fornec, codigo_Prod)
 
     cnpj_Fornec REF TBFornecedor
 
     codigo_Prod REF TBProduto
 
-TBPedido (Numero, valor, local_Transp, cnpj_Farm)
+    TBPedido (Numero, valor, local_Transp, cnpj_Farm)
 
 	local_Transp REF TBTransportadora
  
 	cnpj_Farm REF TBFarmacia
  
-TBConstar (codigo_Prod, numero_Ped, quantidade)
+    TBConstar (codigo_Prod, numero_Ped, quantidade)
 
 	codigo_Prod REF TBProduto
  
 	numero_Ped REF TBPedido
  
-TBTransportadora (localizacao, CNPJ, nome)
+    TBTransportadora (localizacao, CNPJ, nome)
          
-TBFarmacia (CNPJ, nome, localizacao)
+    TBFarmacia (CNPJ, nome, localizacao)
  
-TBGerente (ID, cargo, sigla_Dep, cpf_Empregado)
+    TBGerente (ID, cargo, sigla_Dep, cpf_Empregado)
  
 	cpf_Empregado REF TBEmpregado
   
@@ -91,9 +91,9 @@ TBGerente (ID, cargo, sigla_Dep, cpf_Empregado)
   
 	cargo REF TBCargo
   
-TBCargo(descrição, data_cargo, cargo)
+    TBCargo(descrição, data_cargo, cargo)
  
-TBSubgerente (ID, cargo, cpf_Empregado, gerente_ID)
+    TBSubgerente (ID, cargo, cpf_Empregado, gerente_ID)
  
 	cpf_Empregado REF TBEmpregado
  
@@ -103,28 +103,28 @@ TBSubgerente (ID, cargo, cpf_Empregado, gerente_ID)
 
 ## Functional Dependencies:
 
-Atribuição_Set  --> [numero, nome]
+    Atribuição_Set  --> [numero, nome]
 
-CPF_Empregado --> [RG, celular, email, nome completo, salario, funcao]
+    CPF_Empregado --> [RG, celular, email, nome completo, salario, funcao]
 
-Sigla_Dep --> nome
+    Sigla_Dep --> nome
 
-Sigla_Org --> [ID, nome]
+    Sigla_Org --> [ID, nome]
 
-Cnpj_Fornec --> [localização, nome]
+    Cnpj_Fornec --> [localização, nome]
 
-Codigo_Prod --> nome
+    Codigo_Prod --> nome
 
-Numero_Ped --> valor
+    Numero_Ped --> valor
 
-Local_Transp --> [CNPJ, nome]
+    Local_Transp --> [CNPJ, nome]
 
-Cnpj_ Farm --> [nome, localizacao]
+    Cnpj_ Farm --> [nome, localizacao]
 
-ID_Ger --> cargo
+    ID_Ger --> cargo
 
-ID_Subger --> cargo
+    ID_Subger --> cargo
 
-Codigo_Prod, Numero_Ped --> quantidade
+    Codigo_Prod, Numero_Ped --> quantidade
 
 
