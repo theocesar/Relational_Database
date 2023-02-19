@@ -3,12 +3,15 @@ create database db_1;
 use db_1;
 
 /*Creating the tables according to the cenary and the models*/
+
+/*Creating table 'Departamento'*/
 CREATE TABLE `tbl_departamento` (
   `sigla` varchar(30) NOT NULL,
   `nome` varchar(80) NOT NULL,
   PRIMARY KEY (`sigla`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
+/*Creating table 'Setor'*/
 CREATE TABLE `tbl_setor` (
   `numero` int NOT NULL,
   `atribuicao` varchar(100) NOT NULL,
@@ -19,12 +22,14 @@ CREATE TABLE `tbl_setor` (
   CONSTRAINT `fk_sigla_dep1` FOREIGN KEY (`sigla_dep`) REFERENCES `tbl_departamento` (`sigla`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
+/*Creating table 'Funcao'*/
 CREATE TABLE `tbl_funcao` (
   `codigo` int NOT NULL,
   `descricao` varchar(100) NOT NULL,
   PRIMARY KEY (`codigo`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
+/*Creating table 'Empregado'*/
 CREATE TABLE `tbl_empregado` (
   `CPF` char(11) NOT NULL,
   `RG` char(12) NOT NULL,
@@ -44,6 +49,7 @@ CREATE TABLE `tbl_empregado` (
   CONSTRAINT `fk_sigla_dep2` FOREIGN KEY (`sigla_dep`) REFERENCES `tbl_departamento` (`sigla`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
+/*Creating table 'Orgao Fiscalizador'*/
 CREATE TABLE `tbl_orgao_fiscalizador` (
   `sigla` varchar(30) NOT NULL,
   `ID` int NOT NULL,
@@ -51,6 +57,7 @@ CREATE TABLE `tbl_orgao_fiscalizador` (
   PRIMARY KEY (`sigla`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
+/*Creating table 'Fiscaliza'*/
 CREATE TABLE `tbl_fiscaliza` (
   `sigla_Org` varchar(30) NOT NULL,
   `sigla_Dep` varchar(30) NOT NULL,
@@ -60,6 +67,7 @@ CREATE TABLE `tbl_fiscaliza` (
   CONSTRAINT `fk_sigla_org` FOREIGN KEY (`sigla_Org`) REFERENCES `tbl_orgao_fiscalizador` (`sigla`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
+/*Creating table 'Fornecedor'*/
 CREATE TABLE `tbl_fornecedor` (
   `CNPJ` char(14) NOT NULL,
   `nome` varchar(80) NOT NULL,
@@ -67,6 +75,7 @@ CREATE TABLE `tbl_fornecedor` (
   PRIMARY KEY (`CNPJ`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
+/*Creating table 'Produto'*/
 CREATE TABLE `tbl_produto` (
   `codigo` int NOT NULL,
   `nome` varchar(80) NOT NULL,
@@ -76,6 +85,7 @@ CREATE TABLE `tbl_produto` (
   CONSTRAINT `fk_sigla_dep3` FOREIGN KEY (`sigla_dep`) REFERENCES `tbl_departamento` (`sigla`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
+/*Creating table 'Fornece'*/
 CREATE TABLE `tbl_fornece` (
   `cnpj_fornec` char(14) NOT NULL,
   `codigo_prod` int NOT NULL,
@@ -85,6 +95,7 @@ CREATE TABLE `tbl_fornece` (
   CONSTRAINT `fk_codigo_prod1` FOREIGN KEY (`codigo_prod`) REFERENCES `tbl_produto` (`codigo`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
+/*Creating table 'Transportadora'*/
 CREATE TABLE `tbl_transportadora` (
   `CNPJ` char(14) NOT NULL,
   `nome` varchar(80) NOT NULL,
@@ -92,6 +103,7 @@ CREATE TABLE `tbl_transportadora` (
   PRIMARY KEY (`CNPJ`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
+/*Creating table 'Farmacia'*/
 CREATE TABLE `tbl_farmacia` (
   `CNPJ` char(14) NOT NULL,
   `nome` varchar(80) NOT NULL,
@@ -99,6 +111,7 @@ CREATE TABLE `tbl_farmacia` (
   PRIMARY KEY (`CNPJ`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
+/*Creating table 'Pedido'*/
 CREATE TABLE `tbl_pedido` (
   `numero` int NOT NULL,
   `valor` int NOT NULL,
@@ -111,6 +124,7 @@ CREATE TABLE `tbl_pedido` (
   CONSTRAINT `cnpj_transp` FOREIGN KEY (`cnpj_transp`) REFERENCES `tbl_transportadora` (`CNPJ`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
+/*Creating table 'Constar'*/
 CREATE TABLE `tbl_constar` (
   `codigo_prod` int NOT NULL,
   `numero_ped` int NOT NULL,
@@ -121,12 +135,14 @@ CREATE TABLE `tbl_constar` (
   CONSTRAINT `fk_numero_ped` FOREIGN KEY (`numero_ped`) REFERENCES `tbl_pedido` (`numero`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
+/*Creating table 'Cargo'*/
 CREATE TABLE `tbl_cargo` (
   `codigo` int NOT NULL,
   `descricao` varchar(100) NOT NULL,
   PRIMARY KEY (`codigo`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
+/*Creating table 'Gerente'*/
 CREATE TABLE `tbl_gerente` (
   `ID` int NOT NULL,
   `cpf_empregado` char(11) NOT NULL,
@@ -142,6 +158,7 @@ CREATE TABLE `tbl_gerente` (
   CONSTRAINT `fk_sigla_dep4` FOREIGN KEY (`sigla_dep`) REFERENCES `tbl_departamento` (`sigla`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
+/*Creating table 'Subgerente'*/
 CREATE TABLE `tbl_subgerente` (
   `ID` int NOT NULL,
   `cpf_empregado` char(11) NOT NULL,
@@ -160,6 +177,8 @@ CREATE TABLE `tbl_subgerente` (
 
 
 /*Inserting information inside the newly created tables*/
+
+/*Inserting information into table 'Departamento'*/
 INSERT INTO tbl_departamento(sigla, nome)
 VALUES ('TI', 'Informática');
 INSERT INTO tbl_departamento(sigla, nome)
@@ -169,6 +188,8 @@ VALUES ('BK', 'Falência');
 INSERT INTO tbl_departamento(sigla, nome)
 VALUES ('MR', 'Manipulação de Remédios');
 
+
+/*Inserting information into table 'Setor'*/
 INSERT INTO tbl_setor(numero, atribuicao, nome, sigla_dep)
 VALUES (1, 'Desenvolvimento de Software', 'ONE', 'TI'); 
 INSERT INTO tbl_setor(numero, atribuicao, nome, sigla_dep)
@@ -189,7 +210,7 @@ INSERT INTO tbl_setor(numero, atribuicao, nome, sigla_dep)
 VALUES ( 40, 'Marketing de produtos', 'FORTY', 'MR'); 
 
 
-
+/*Inserting information into table 'Funcao'*/
 INSERT INTO tbl_funcao(codigo, descricao)
 VALUES (100, 'Desenvolvedor');
 INSERT INTO tbl_funcao(codigo, descricao)
@@ -202,6 +223,7 @@ INSERT INTO tbl_funcao(codigo, descricao)
 VALUES (140, 'Assessor de Marketing'); 
 
 
+/*Inserting information into table 'Empregado'*/
 INSERT INTO tbl_empregado(CPF, RG, celular, email, salario, funcao, sigla_dep, num_set, nome)
 VALUES (14565439800, 121212212, 009808998, 'rrrrrr@gmail.com', 6000, 100, 'TI', 1, 'Joberson'); 
 INSERT INTO tbl_empregado(CPF, RG, celular, email, salario, funcao, sigla_dep, num_set, nome)
@@ -234,21 +256,28 @@ INSERT INTO tbl_empregado(CPF, RG, celular, email, salario, funcao, sigla_dep, n
 VALUES (02209090877, 444565798, 098797676, 'jljljl@hotmail.com', 5000, 140, 'MR', 40, 'Felipe'); 
 
 
+/*Inserting information into table 'Produto'*/
 INSERT INTO tbl_produto(codigo, nome, sigla_dep)
 VALUES (007, 'tira-dor','MR');
 INSERT INTO tbl_produto(codigo, nome, sigla_dep)
 VALUES (008, 'tira-estresse','MR'); 
 
+
+/*Inserting information into table 'Transportadora'*/
 INSERT INTO tbl_transportadora (CNPJ, localizacao, nome)
 VALUES (555565656, 'Av. do Trabalho,800', 'Transportation');
 INSERT INTO tbl_transportadora (CNPJ, localizacao, nome)
 VALUES (444454545, 'Av. da Tranquilidade,900','Transportando'); 
 
+
+/*Inserting information into table 'Farmacia'*/
 INSERT INTO tbl_farmacia (CNPJ, nome, localizacao)
 VALUES (111123233, 'Venda R', 'Rua do Comércio, 110');
 INSERT INTO tbl_farmacia (CNPJ, nome, localizacao)
 VALUES (222221122, 'Venda Y', 'Rua do Escambo, 120'); 
 
+
+/*Inserting information into table 'Pedido'*/
 INSERT INTO tbl_pedido(numero, valor, cnpj_transp, cnpj_farm)
 VALUES (51, 1000, 555565656, 111123233);
 INSERT INTO tbl_pedido(numero, valor, cnpj_transp, cnpj_farm)
@@ -256,6 +285,8 @@ VALUES (52, 500, 444454545, 222221122);
 INSERT INTO tbl_pedido(numero, valor, cnpj_transp, cnpj_farm)
 VALUES (53, 250, 555565656, 222221122); 
 
+
+/*Inserting information into table table 'Constar'*/
 INSERT INTO tbl_constar(codigo_Prod, numero_Ped, quantidade)
 VALUES (007, 51, 25);
 INSERT INTO tbl_constar(codigo_Prod, numero_Ped, quantidade)
@@ -263,12 +294,15 @@ VALUES (007, 52, 20);
 INSERT INTO tbl_constar(codigo_Prod, numero_Ped, quantidade)
 VALUES (008, 53, 15); 
 
+
+/*Inserting information into table 'Cargo*/
 INSERT INTO tbl_cargo(codigo, descricao)       
 VALUES (1000,'gerente');
 INSERT INTO tbl_cargo(codigo, descricao)
 VALUES (900,'subgerente'); 
 
 
+/*Inserting information into table 'Gerente'*/
 INSERT INTO tbl_gerente(ID, CPF_empregado, cargo, sigla_dep, data_cargo) 
 VALUES (120, 43243029087, 1000, 'TI', '2000-05-20');
 INSERT INTO tbl_gerente(ID, CPF_empregado, cargo, sigla_dep, data_cargo) 
@@ -278,6 +312,8 @@ VALUES (122, 88880000345, 1000, 'BK','2008-09-10');
 INSERT INTO tbl_gerente(ID, CPF_empregado, cargo, sigla_dep, data_cargo) 
 VALUES (123, 99990000124, 1000, 'MR','2010-02-05'); 
 
+
+/*Inserting information into table 'Subgerente*/
 INSERT INTO tbl_subgerente(ID, CPF_empregado, cargo, sigla_dep, data_cargo)
 VALUES (91, 14565439800, 900, 'TI', '2010-09-1');
 INSERT INTO tbl_subgerente(ID, CPF_empregado, cargo, sigla_dep, data_cargo)
@@ -295,8 +331,10 @@ VALUES (97, 55550000567, 900, 'MR', '2014-01-05');
 INSERT INTO tbl_subgerente(ID, CPF_empregado, cargo, sigla_dep, data_cargo)
 VALUES (98, 77776666090, 900, 'MR', '2012-06-15'); 
 INSERT INTO tbl_subgerente(ID, CPF_empregado, cargo, sigla_dep, data_cargo)
-VALUES (99, 12008787991, 900, 'MR', '2015-03-03');   
+VALUES (99, 12008787991, 900, 'MR', '2015-03-03');  
+ 
 
+/*Inserting information into table 'Orgao Fiscalizador'*/
 INSERT INTO tbl_orgao_fiscalizador(sigla, ID, nome)
 VALUES ('FF', 1345, 'Fiscalizando Financial');
 INSERT INTO tbl_orgao_fiscalizador(sigla, ID, nome)
@@ -304,6 +342,8 @@ VALUES ('SV', 1678, 'Vigilância Sanitária');
 INSERT INTO tbl_orgao_fiscalizador(sigla, ID, nome)
 VALUES ('CC', 1907, 'Crimes Cibernéticos'); 
 
+
+/*Inserting information into table 'Fiscaliza'*/
 INSERT INTO tbl_fiscaliza(sigla_Org, sigla_Dep)
 VALUES ('FF', 'BK');
 INSERT INTO tbl_fiscaliza(sigla_Org, sigla_Dep)
@@ -311,12 +351,15 @@ VALUES ('SV', 'MR');
 INSERT INTO tbl_fiscaliza(sigla_Org, sigla_Dep)
 VALUES ('CC', 'TI'); 
 
+
+/*Inserting information into table 'Fornecedor'*/
 INSERT INTO tbl_fornecedor(CNPJ, nome, localizacao)
 VALUES (777777999, 'Diroskan Company', 'Av. dos Buracos,500');
 INSERT INTO tbl_fornecedor(CNPJ, nome, localizacao)
 VALUES (999999456, 'Medicin Ultra Ltda', 'Av. das Árvores,212');
 
 
+/*Inserting information into table 'Fornece'*/
 INSERT INTO tbl_fornece(CNPJ_fornec, codigo_prod)
 VALUES (777777999, 008);
 INSERT INTO tbl_fornece(CNPJ_fornec, codigo_prod)
